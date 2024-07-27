@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:texttospeech/Screens/Communication.dart';
+import 'package:texttospeech/Screens/TestList.dart';
 import 'package:texttospeech/Screens/TestReports.dart';
 
 void main() {
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Text To Speech',
       debugShowCheckedModeBanner: false,
-      home: TestReport(),
+      home: Communication(),
     );
   }
 }
