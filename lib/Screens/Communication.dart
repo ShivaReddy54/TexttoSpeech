@@ -16,7 +16,7 @@ class _Screen2State extends State<Communication> {
       "time": "26 July 2024 - 12:40 pm",
       "clicked": false,
       "transcript":
-          "A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long.A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long.",
+          "A paragraph is defined . Len and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long.A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long.",
     },
     {
       "title":
@@ -111,6 +111,20 @@ class _Screen2State extends State<Communication> {
             child: Text(
               "Transcript",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 100,
+              child: SingleChildScrollView(
+                //physics: ScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                child: Text(
+                  _data[index]["transcript"],
+                  textAlign: TextAlign.justify,
+                ),
+              ),
             ),
           ),
         ],
