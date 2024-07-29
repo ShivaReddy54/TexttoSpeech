@@ -219,6 +219,7 @@ class _Screen2State extends State<Communication> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
               Expanded(
@@ -240,12 +241,16 @@ class _Screen2State extends State<Communication> {
                           Icons.mic,
                           color: Colors.white,
                         ),
-                        Text(
-                          "START RECORDING",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 19,
-                              fontWeight: FontWeight.w500),
+                        Flexible(
+                          child: Text(
+                            "START RECORDING",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                         )
                       ],
                     ),
