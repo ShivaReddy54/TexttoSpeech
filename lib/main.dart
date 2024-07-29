@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Text To Speech',
       debugShowCheckedModeBanner: false,
-      home: Communication(),
+      home: TestList(),
     );
   }
 }
