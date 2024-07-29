@@ -16,7 +16,7 @@ class _TestListState extends State<TestList> {
           "Could you please explain the projects you have done during your internship and explain the challenges you faced?",
       "date": "26 July 2024",
       "Talk Time": "10:15",
-      "Condidence": 56,
+      "Confidence": 56,
       "Accuracy": 75,
       "Grammar Accuracy": 56,
       "Sentences": 26
@@ -26,7 +26,7 @@ class _TestListState extends State<TestList> {
           "Could you please explain the projects you have done during your internship and explain the challenges you faced?",
       "date": "26 July 2024",
       "Talk Time": "10:15",
-      "Condidence": 56,
+      "Confidence": 56,
       "Accuracy": 75,
       "Grammar Accuracy": 56,
       "Sentences": 26
@@ -102,8 +102,7 @@ class _TestListState extends State<TestList> {
               children: [
                 InkWell(
                   onTap: () {
-                    isClicked[index] = true;
-                    // print(index);
+                    isClicked[index] = !isClicked[index];
                     setState(() {});
                   },
                   child: Text(
@@ -155,13 +154,13 @@ class _TestListState extends State<TestList> {
               height: 180,
               child: Row(
                 children: [
-                  Expanded(flex: 1, child: Text("Data statics")),
+                  Expanded(flex: 1, child: Text("Data statistics")),
                   Expanded(
                       flex: 1,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          topic(Colors.green, "Condidence", index),
+                          topic(Colors.green, "Confidence", index),
                           topic(Colors.yellow, "Accuracy", index),
                         ],
                       ))
@@ -170,19 +169,67 @@ class _TestListState extends State<TestList> {
             ),
           ),
           Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(5.0),
               child: Container(
                 width: double.infinity,
-                height: 60,
+                height: 75,
+                // color: Colors.lightBlue,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // topic(Colors.green, "Grammar Accuracy", index)
+                    Expanded(
+                        flex: 7,
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: topic2(
+                                    Colors.green, "Grammar Accuracy", index)),
+                            Expanded(
+                                child:
+                                    topic2(Colors.green, "Sentences", index)),
+                          ],
+                        )),
+                    Expanded(
+                      flex: 1,
+                      child: InkWell(
+                        onTap: () {
+                          isClicked[index] = false;
+                          setState(() {});
+                        },
+                        child: Text(
+                          "< less",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w300),
+                        ),
+                      ),
+                    ),
+                    // SizedBox(
+                    //   width: 20,
+                    // )
                   ],
                 ),
               ))
         ],
       ),
+    );
+  }
+
+  Widget topic2(textColor, topic, index) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          topic,
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
+          textAlign: TextAlign.left,
+        ),
+        Text(
+          "${_data[index][topic]}%",
+          textAlign: TextAlign.left,
+          style: TextStyle(
+              fontSize: 18, fontWeight: FontWeight.w700, color: Colors.green),
+        ),
+      ],
     );
   }
 
