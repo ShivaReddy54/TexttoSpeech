@@ -138,11 +138,11 @@ class _Screen2State extends State<Communication> {
       child: Container(
         width: double.infinity,
         height: 120,
-        color: Colors.green,
+        // color: Color.fromRGBO(2, 135, 54, 1),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(flex: 3, child: RecordIcon()),
+            Expanded(flex: 1, child: RecordIcon()),
             Expanded(flex: 3, child: Text("data"))
           ],
         ),
@@ -158,43 +158,7 @@ class _Screen2State extends State<Communication> {
           shape: BoxShape.circle,
           border: Border.all(
               width: 0.1, color: Color.fromARGB(255, 145, 244, 148))),
-      child: Container(
-        width: 250,
-        height: 250,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-                width: 0.3, color: Color.fromARGB(255, 79, 234, 85))),
-        child: Container(
-          width: 200,
-          height: 200,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                  width: 0.5, color: Color.fromARGB(255, 73, 253, 79))),
-          child: Container(
-            width: 150,
-            height: 150,
-            decoration: BoxDecoration(
-                color: Colors.green,
-                shape: BoxShape.circle,
-                border: Border.all(
-                    width: 0.7, color: Color.fromARGB(255, 6, 236, 13))),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.circle,
-                  color: Colors.white,
-                ),
-                Text(
-                  "Rec",
-                  style: TextStyle(color: Colors.white),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+      child: RecordingAnimate(),
     );
   }
 
@@ -247,7 +211,7 @@ class _Screen2State extends State<Communication> {
                     height: 35,
                     decoration: BoxDecoration(
                         color: Color(0xFF05872d),
-                        borderRadius: BorderRadius.circular(25)),
+                        borderRadius: BorderRadius.circular(15)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -277,5 +241,123 @@ class _Screen2State extends State<Communication> {
         ],
       ),
     );
+  }
+}
+
+class RecordingAnimate extends StatefulWidget {
+  const RecordingAnimate({super.key});
+
+  @override
+  _RecordingAnimateState createState() => _RecordingAnimateState();
+}
+
+class _RecordingAnimateState extends State<RecordingAnimate>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500), // Adjust the duration here
+      vsync: this,
+    )..repeat();
+
+    _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return CustomPaint(
+                painter: ConcentricCirclesPainter(_animation.value),
+                child: const SizedBox(
+                  width: 150,
+                  height: 150,
+                ),
+              );
+            },
+          ),
+          const CircleContainer(),
+        ],
+      ),
+    );
+  }
+}
+
+class CircleContainer extends StatelessWidget {
+  const CircleContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 40,
+      decoration: const BoxDecoration(
+        color: Color(0xFF507e62),
+        shape: BoxShape.circle,
+      ),
+      child: const Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.circle, color: Colors.white, size: 8),
+            SizedBox(width: 3),
+            Text(
+              "REC",
+              style: TextStyle(color: Colors.white, fontSize: 8),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ConcentricCirclesPainter extends CustomPainter {
+  final double progress;
+
+  ConcentricCirclesPainter(this.progress);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double centerX = size.width / 2;
+    final double centerY = size.height / 2;
+    final double maxRadius = size.width / 2;
+    const double minStrokeWidth = 0.5;
+    const double maxStrokeWidth = 2.0;
+    const int numCircles = 10;
+
+    for (int i = 0; i < numCircles; i++) {
+      double normalizedValue = (i + progress) / numCircles;
+      double radius = maxRadius * normalizedValue;
+      double strokeWidth = maxStrokeWidth -
+          (normalizedValue * (maxStrokeWidth - minStrokeWidth));
+
+      final Paint paint = Paint()
+        ..color = const Color(0xFF507e62).withOpacity(1 - normalizedValue)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = strokeWidth;
+
+      canvas.drawCircle(Offset(centerX, centerY), radius, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }

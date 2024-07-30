@@ -175,7 +175,7 @@ class _Screen1State extends State<TestReport> {
         Text(
           topic,
           style: TextStyle(
-              color: Colors.amber[800],
+              color: Colors.yellow[700],
               fontSize: 14,
               fontWeight: FontWeight.bold),
         ),
