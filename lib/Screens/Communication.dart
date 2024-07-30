@@ -5,84 +5,88 @@ class Communication extends StatefulWidget {
   const Communication({super.key});
 
   @override
-  State<Communication> createState() => _Screen2State();
+  State<Communication> createState() => _CommunicationState();
 }
 
-class _Screen2State extends State<Communication> {
-  List _data = [
-    {
-      "title":
-          "Could you please explain the projects you have done during your internship and explain the challenges you faced?",
-      "time": "26 July 2024 - 12:40 pm",
-      "clicked": false,
-      "transcript":
-          "A paragraph is defined . Len and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long.A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long.",
-    },
-    {
-      "title":
-          "Could you please explain the projects you have done during your internship and explain the challenges you faced?",
-      "time": "26 July 2024 - 12:40 pm",
-      "clicked": false,
-      "transcript":
-          "A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long.A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long."
-    },
-    {
-      "title":
-          "Could you please explain the projects you have done during your internship and explain the challenges you faced?",
-      "time": "26 July 2024 - 12:40 pm",
-      "clicked": false,
-      "transcript":
-          "A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long.A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long."
-    },
-  ];
+class _CommunicationState extends State<Communication> {
+  dynamic _data = {
+    "title":
+        "Could you please explain the projects you have done during your internship and explain the challenges you faced?",
+    "time": "26 July 2024 - 12:40 pm",
+    "clicked": false,
+    "transcript":
+        "A paragraph is defined . Len and appearance do not determine whether a section in a A paragraph is defined . Len and appearance do not determine whether a section in a A paragraph is defined . Len and appearance do not determine whether a section in aA paragraph is defined . Len and appearance do not determine whether a section in aA paragraph is defined . Len and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long.A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long.",
+  };
 
-  List isClicked = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    isClicked = List.filled(_data.length, false);
-  }
+  bool isRecording = false;
+  bool isSubmit = false;
+  bool isShown = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Communication"),
-          centerTitle: true,
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.more_horiz,
-                  size: 30,
-                ))
+      appBar: AppBar(
+        title: Text("Communication"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.more_horiz,
+              size: 30,
+            ),
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: ListView(
+          scrollDirection: Axis.vertical,
+          children: [
+            Container1(),
+            (isRecording && isShown) ? Container2() : SizedBox.shrink(),
           ],
         ),
-        body: Padding(
-          padding: EdgeInsets.all(8),
-          child: ListView.builder(
-              itemCount: _data.length,
-              itemBuilder: (context, index) {
-                return Test(index);
-              }),
-        ));
-  }
-
-  Widget Test(index) {
-    return Column(
-      children: [
-        Container1(index),
-        isClicked[index] ? Container2(index) : SizedBox.shrink()
-      ],
+      ),
     );
   }
 
-  Widget Container2(dynamic index) {
+  Widget RecordingRow() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: double.infinity,
+        height: 100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(flex: 1, child: RecordIcon()),
+            Expanded(flex: 3, child: Text("data")),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget RecordIcon() {
+    return Container(
+      width: 300,
+      height: 300,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          width: 0.1,
+          color: Color.fromARGB(255, 145, 244, 148),
+        ),
+      ),
+      child: RecordingAnimate(),
+    );
+  }
+
+  Widget Container2() {
     return Container(
       width: double.infinity,
-      height: 300,
+      height: 450,
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -93,15 +97,48 @@ class _Screen2State extends State<Communication> {
         ],
       ),
       child: Column(
-        children: [
-          RecordingRow(),
-          Transcript(index),
-        ],
+        children: [RecordingRow(), Transcript(), Submit()],
       ),
     );
   }
 
-  Widget Transcript(index) {
+  Widget Submit() {
+    return Container(
+      width: double.infinity,
+      height: 62,
+      child: Center(
+        child: Container(
+          width: 90,
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: InkWell(
+            onTap: () {
+              isSubmit = true;
+              isShown = false;
+              print("done");
+              setState(() {});
+              isSubmit = false;
+            },
+            child: Center(
+              child: Text(
+                "SUBMIT",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget Transcript() {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Column(
@@ -116,12 +153,11 @@ class _Screen2State extends State<Communication> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 100,
+              height: 190,
               child: SingleChildScrollView(
-                //physics: ScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 child: Text(
-                  _data[index]["transcript"],
+                  _data["transcript"],
                   textAlign: TextAlign.justify,
                 ),
               ),
@@ -132,40 +168,10 @@ class _Screen2State extends State<Communication> {
     );
   }
 
-  Widget RecordingRow() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: double.infinity,
-        height: 120,
-        // color: Color.fromRGBO(2, 135, 54, 1),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(flex: 1, child: RecordIcon()),
-            Expanded(flex: 3, child: Text("data"))
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget RecordIcon() {
-    return Container(
-      width: 300,
-      height: 300,
-      decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-              width: 0.1, color: Color.fromARGB(255, 145, 244, 148))),
-      child: RecordingAnimate(),
-    );
-  }
-
-  Widget Container1(index) {
+  Widget Container1() {
     return Container(
       width: double.infinity,
-      height: 160,
+      height: 180,
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -181,9 +187,9 @@ class _Screen2State extends State<Communication> {
         children: [
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left: 12.0, top: 5.0, bottom: 0.0),
               child: Text(
-                _data[index]["title"],
+                _data["title"],
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
@@ -191,7 +197,7 @@ class _Screen2State extends State<Communication> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "${_data[index]["time"]}",
+              "${_data["time"]}",
               style:
                   TextStyle(color: Colors.green, fontWeight: FontWeight.w700),
             ),
@@ -200,43 +206,57 @@ class _Screen2State extends State<Communication> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
-              Expanded(
-                flex: 2,
+              Container(
+                width: 185,
                 child: InkWell(
                   onTap: () {
-                    isClicked[index] = !isClicked[index];
+                    if (isSubmit) {
+                      isShown = false;
+                      isRecording = false;
+                      print("Cheating");
+                    } else {
+                      isRecording = true;
+                      isShown = true;
+                      print("Can start");
+                    }
                     setState(() {});
                   },
                   child: Container(
-                    height: 35,
+                    height: 40,
                     decoration: BoxDecoration(
-                        color: Color(0xFF05872d),
-                        borderRadius: BorderRadius.circular(15)),
+                      color: Color(0xFF05872d),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Icon(
                           Icons.mic,
                           color: Colors.white,
+                          size: 20,
                         ),
                         Flexible(
                           child: Text(
                             "START RECORDING",
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 19,
-                                fontWeight: FontWeight.w500),
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
-              Spacer()
+              Spacer(),
             ],
+          ),
+          SizedBox(
+            height: 8,
           ),
         ],
       ),

@@ -128,7 +128,7 @@ class _TestListState extends State<TestList> {
   Widget container2(index) {
     return Container(
       width: double.infinity,
-      height: 470,
+      height: 290,
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -139,73 +139,68 @@ class _TestListState extends State<TestList> {
         ],
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: details(index),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: recording(index),
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
               width: double.infinity,
               height: 180,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Expanded(
-                      flex: 1,
-                      child: CircularPercentIndicator(
-                        radius: 80,
-                        lineWidth: 15,
-                        progressColor: Color.fromRGBO(0, 132, 47, 1),
-                        circularStrokeCap: CircularStrokeCap.round,
-                        percent: _data[index]["Confidence"] / 100,
-                        center: Transform.rotate(
-                          angle: 5.968,
-                          child: CircularPercentIndicator(
-                              radius: 50,
-                              lineWidth: 15,
-                              startAngle: 5.93412,
-                              progressColor: Color.fromRGBO(252, 185, 0, 1),
-                              percent: _data[index]["Accuracy"] / 100,
-                              circularStrokeCap: CircularStrokeCap.round,
-                              center: Transform.rotate(
-                                angle: -5.968,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "556",
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      "words",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                        ),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          topic(Color.fromRGBO(0, 116, 42, 1), "Confidence",
-                              index),
-                          topic(Color.fromRGBO(252, 187, 11, 1), "Accuracy",
-                              index),
-                        ],
-                      ))
+                  Container(
+                    width: MediaQuery.sizeOf(context).width / 2,
+                    child: CircularPercentIndicator(
+                      radius: 80,
+                      lineWidth: 15,
+                      progressColor: Color.fromRGBO(0, 132, 47, 1),
+                      circularStrokeCap: CircularStrokeCap.round,
+                      percent: _data[index]["Confidence"] / 100,
+                      center: Transform.rotate(
+                        angle: 5.968,
+                        child: CircularPercentIndicator(
+                            radius: 50,
+                            lineWidth: 15,
+                            startAngle: 5.93412,
+                            progressColor: Color.fromRGBO(252, 185, 0, 1),
+                            percent: _data[index]["Accuracy"] / 100,
+                            circularStrokeCap: CircularStrokeCap.round,
+                            center: Transform.rotate(
+                              angle: -5.968,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "556",
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "words",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
+                            )),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.sizeOf(context).width / 2 - 50,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        topic(
+                            Color.fromRGBO(0, 116, 42, 1), "Confidence", index),
+                        topic(
+                            Color.fromRGBO(252, 187, 11, 1), "Accuracy", index),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -261,7 +256,7 @@ class _TestListState extends State<TestList> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          topic,
+          (topic[0] != "G") ? topic : "Grammar",
           style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
           textAlign: TextAlign.left,
         ),
